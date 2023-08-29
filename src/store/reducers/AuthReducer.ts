@@ -6,7 +6,7 @@ import {INavItem, defaultNavList} from "../../App";
 
 
 interface IAuthState {
-    user: IAccount | null
+    username: string | null
     token: string | null
     navList: INavItem[]
     isLoading: boolean
@@ -17,7 +17,7 @@ interface IAuthState {
 }
 
 const initialState: IAuthState = {
-    user: null,
+    username: null,
     token: null,
     navList: [],
     isLoading: false,
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, {payload}) => {
-            state.user = payload.user
+            state.username = payload.username
             state.token = payload.token
             state.navList = defaultNavList
             state.interceptor = payload.interceptor
@@ -46,7 +46,7 @@ export const authSlice = createSlice({
             state.authState = true
         })
         builder.addCase(checkToken.fulfilled, (state, {payload}) => {
-            state.user = payload?.user || null
+            state.username = payload?.username || null
             state.token = payload?.token || null
             state.navList = defaultNavList
             state.interceptor = payload?.interceptor || 0
@@ -57,7 +57,7 @@ export const authSlice = createSlice({
         })
         builder.addCase(logout.fulfilled, (state) => {
             state.token = null
-            state.user = null
+            state.username = null
             state.isLoading = false
             state.error = null
             state.isAuth = false
@@ -76,7 +76,7 @@ export const authSlice = createSlice({
                 localStorage.removeItem('token')
                 localStorage.removeItem('user')
                 api.interceptors.request.eject(state.interceptor)
-                state.user = null
+                state.username = null
                 state.token = null
                 state.isAuth = false
             }

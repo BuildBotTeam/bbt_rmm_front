@@ -11,10 +11,12 @@ import {
 } from '@mui/material';
 import {useSnackbar} from "notistack";
 import LoginPage from "./components/LoginPage";
+import HomePage from "./components/HomePage";
+import HomeIcon from '@mui/icons-material/Home';
 
 const theme = createTheme({
     typography: {
-        fontFamily: 'Roboto',
+        fontFamily: 'Ubuntu',
     },
     palette: {
         mode: 'dark',
@@ -59,8 +61,8 @@ export interface INavItem {
 
 export var defaultNavList: INavItem[] = [
     {
-        name: '',
-        icon: <div/>,
+        name: 'Home',
+        icon: <HomeIcon/>,
         start_path: '',
         path: '/:id?',
         validate: '',
@@ -128,8 +130,7 @@ const App: React.FC = () => {
             <Routes>
                 <Route path="login" element={<Navigate to={'/'}/>}/>
                 <Route path="logout" element={<Navigate replace to={'login'}/>}/>
-                <Route path="change_password" element={<Navigate to={'/'}/>}/>
-                <Route path="/" element={<div/>}>
+                <Route path="/" element={<HomePage/>}>
                     {navigationList}
                 </Route>
             </Routes>

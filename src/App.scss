@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"),
+  url("./assets/Ubuntu-Regular.ttf");
+  font-weight: normal;
+}
+
 .logo_anim {
   animation: rotate 2s linear infinite;
   transform-origin: 47% 53%;
@@ -32,3 +39,99 @@
   backdrop-filter: blur(2px) brightness(80%);
   //filter: blur(2px);
 }
+
+.nav_paper {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
+  border-radius: 20px !important;
+  transition: 500ms !important;
+
+  &:hover {
+    border-radius: 5px !important;
+
+    .MuiListItemButton-root {
+      width: 170px;
+      border-radius: 5px;
+    }
+
+    span:nth-child(1) {
+      opacity: 1;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+  }
+
+  span:nth-child(1) {
+    opacity: 0;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    transition: 500ms;
+  }
+
+  .MuiListItemButton-root {
+    transition: 500ms;
+    padding: 6px 11px;
+    white-space: nowrap;
+    border-radius: 20px;
+    text-align: center;
+    width: 45px;
+  }
+
+  .MuiListItemIcon-root {
+    min-width: 0;
+  }
+}
+
+.header_paper {
+  position: fixed;
+  right: 5px;
+  top: 10px;
+  border-radius: 40px !important;
+  z-index: 1000;
+
+  .header_loading {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    user-select: none;
+    transition: 500ms;
+
+    &.anim {
+      left: -50px;
+      opacity: 1;
+    }
+  }
+
+  button {
+    z-index: 1;
+    border-radius: 40px;
+    min-width: 0;
+    width: 50px;
+    transition: 500ms;
+    display: flex;
+    justify-content: space-evenly;
+    white-space: nowrap;
+
+    span {
+      margin: 0;
+    }
+
+    span:nth-child(1) {
+      opacity: 0;
+      overflow: hidden;
+      transition: 500ms;
+    }
+
+    &:hover {
+      width: 200px;
+
+      span:nth-child(1) {
+        opacity: 1;
+      }
+    }
+  }
+}
+

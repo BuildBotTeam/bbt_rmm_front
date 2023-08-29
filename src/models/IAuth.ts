@@ -1,7 +1,7 @@
 export interface IAuth {
     username: string
     password: string
-    source: string
+    server?: string
 }
 
 export interface IAccessModel {
@@ -29,6 +29,6 @@ export interface IAccount {
 }
 
 export interface IAuthResponse {
-    key: string
-    user: IAccount
+    token: string
+    username: string
 }

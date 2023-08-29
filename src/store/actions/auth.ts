@@ -1,6 +1,5 @@
 import axios, {AxiosError} from "axios";
 import {IAuth, IAuthResponse} from "../../models/IAuth";
-import {apiUrl, restAuthUrl} from "../../api";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import api, {apiError} from "../../api";
 
@@ -10,14 +9,18 @@ export const login = createAsyncThunk(
     'login',
     async (post: IAuth, thunkAPI) => {
         try {
-            const {data} = await axios.post<IAuthResponse>(restAuthUrl + 'login/', post)
-            localStorage.setItem('user', JSON.stringify(data.user))
-            localStorage.setItem('token', data.key)
+            const server = post.server
+            delete post.server
+            const {data} = await axios.post<IAuthResponse>(server + '/backend/auth/login/', post)
+            localStorage.setItem('user', data.username)
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('server', server!)
             interceptor = api.interceptors.request.use((config: any) => {
-                config.headers["Authorization"] = `Token ${data.key}`;
+                config.headers["Authorization"] = `Token ${data.token}`;
                 return config
             })
-            return {user: data.user, token: data.key, interceptor: interceptor}
+            api.defaults.baseURL = server + '/backend/api'
+            return {username: data.username, token: data.token, interceptor: interceptor}
         } catch (e) {
             return thunkAPI.rejectWithValue({code: 0, message: 'Неверный логин или пароль'})
         }
@@ -29,14 +32,16 @@ export const logout = createAsyncThunk(
     async (_, thunkAPI) => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        try {
-            await api.post(restAuthUrl + "logout/", {})
-            api.interceptors.request.eject(interceptor)
-            return {}
-        } catch (e) {
-            api.interceptors.request.eject(interceptor)
-            return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
-        }
+        // const server = localStorage.getItem('server')
+        // try {
+        //     await api.post(server + "/backend/auth/logout/", {})
+        //     api.interceptors.request.eject(interceptor)
+        //     return {}
+        // } catch (e) {
+        api.interceptors.request.eject(interceptor)
+        return {}
+        // return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
+        // }
     }
 )
 
@@ -44,21 +49,24 @@ export const checkToken = createAsyncThunk(
     'checkToken',
     async (_, thunkAPI) => {
         const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        const username = localStorage.getItem('username');
+        const server = localStorage.getItem('server')
         if (token) {
             try {
-                await axios.post<IAuthResponse>(apiUrl + 'check_token/', {token: token})
+                await axios.post<IAuthResponse>(server + '/backend/auth/check_token/', {},{headers: {Authorization: `Token ${token}`}})
                 interceptor = api.interceptors.request.use((config: any) => {
                     config.headers["Authorization"] = `Token ${token}`;
                     return config
                 })
-                return {user: user, token: token, interceptor: interceptor}
+                api.defaults.baseURL = server + '/backend/api'
+                return {username: username, token: token, interceptor: interceptor}
             } catch (e) {
                 thunkAPI.dispatch(logout());
                 return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
             }
         } else if (token === undefined) {
-            thunkAPI.dispatch(logout());
+            return thunkAPI.rejectWithValue({})
         }
+        return thunkAPI.rejectWithValue({})
     }
 )

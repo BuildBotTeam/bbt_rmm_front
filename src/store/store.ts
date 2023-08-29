@@ -1,8 +1,10 @@
 import {AnyAction, combineReducers, configureStore} from "@reduxjs/toolkit";
 import authReducer from './reducers/AuthReducer'
+import mRouterReducer from './reducers/MRouters'
 
 const rootReducer = combineReducers({
     authReducer,
+    mRouterReducer,
 })
 
 const reducerProxy = (state: any, action: AnyAction) => {
