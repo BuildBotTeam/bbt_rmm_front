@@ -14,7 +14,7 @@ export default function LoginPage() {
     const {control, handleSubmit} = useForm()
     const {token, isLoading} = useAppSelector(state => state.authReducer)
     const [showPassword, setShowPassword] = useState(false)
-    const defServer = localStorage.getItem('server') || 'http://localhost:4000'
+    const defServer = localStorage.getItem('server') || 'http://localhost'
 
     useEffect(() => {
         if (token) navigate('/home', {replace: true})
@@ -30,7 +30,7 @@ export default function LoginPage() {
             <Paper
                 elevation={8}
                 sx={{
-                    margin: {xs: '50px auto', sm: '250px auto 0 auto'},
+                    margin: {xs: '50px auto', sm: '150px auto 0 auto'},
                     position: 'relative',
                     width: {xs: 'auto', sm: 500},
                     padding: 1,
@@ -38,7 +38,20 @@ export default function LoginPage() {
                 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={2} sx={{padding: 1}}>
-                        <Typography variant={'h3'} sx={{textAlign: 'center', fontWeight: 'bold'}}>Mikrotik management</Typography>
+                        <Typography variant={'h3'} sx={{textAlign: 'center', fontWeight: 'bold'}}>
+                            Mikrotik management
+                        </Typography>
+                        <Controller
+                            name={'email'}
+                            control={control}
+                            defaultValue={''}
+                            rules={{required: true}}
+                            render={({field, fieldState: {invalid}}) => (
+                                <TextField {...field} label="Email" type={'email'}
+                                           helperText={invalid && 'Необходимо заполнить'}
+                                           error={invalid} fullWidth/>
+                            )}
+                        />
                         <Controller
                             name={'username'}
                             control={control}
@@ -55,7 +68,8 @@ export default function LoginPage() {
                             defaultValue={''}
                             rules={{required: true}}
                             render={({field, fieldState: {invalid}}) => (
-                                <TextField {...field} label="Password" type={showPassword ? 'text' : 'password'} fullWidth
+                                <TextField {...field} label="Password" type={showPassword ? 'text' : 'password'}
+                                           fullWidth
                                            helperText={invalid && 'Необходимо заполнить'} error={invalid}
                                            InputProps={{ // <-- This is where the toggle button is added.
                                                endAdornment: (

@@ -14,6 +14,8 @@ import LoginPage from "./components/LoginPage";
 import HomePage from "./components/HomePage";
 import HomeIcon from '@mui/icons-material/Home';
 import MikRouterList from "./components/MikRouters/MikRouterList";
+import MikRouterDetail from "./components/MikRouters/MikRouterDetail";
+import MikRouterPage from "./components/MikRouters/MikRouterPage";
 
 const theme = createTheme({
     typography: {
@@ -64,18 +66,32 @@ export var defaultNavList: INavItem[] = [
     {
         name: 'Home',
         icon: <HomeIcon/>,
-        start_path: '',
+        start_path: '/',
         path: '/:id?',
         validate: '',
-        component: <MikRouterList/>,
+        component: <MikRouterPage/>,
         children: [
             {
-                name: 'Home',
+                name: 'list',
+                icon: <div/>,
+                start_path: '',
+                path: '',
+                validate: '',
+                component: <MikRouterList/>,
+            },            {
+                name: 'router',
                 icon: <div/>,
                 start_path: 'router',
                 path: '/create?/edit?',
                 validate: '',
-                component: <div/>,
+                component: <MikRouterList/>,
+            }, {
+                name: 'detail',
+                icon: <div/>,
+                start_path: 'detail',
+                path: '',
+                validate: '',
+                component: <MikRouterDetail/>,
             },
         ]
     },
