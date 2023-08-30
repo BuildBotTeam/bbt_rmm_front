@@ -58,7 +58,7 @@ export function MainDialog(props: MainDialogProps) {
         >
             <DialogTitle sx={{pb: 1}}>
                 <Box sx={{float: 'right'}}>
-                    <Button onClick={handleClose} variant={'text'} sx={{fontWeight: 700}}
+                    <Button onClick={handleClose} variant={'text'} sx={{fontWeight: 500}}
                             startIcon={<ArrowBackIosNewIcon sx={{fontSize: 20}}/>}>Назад</Button>
                 </Box>
             </DialogTitle>

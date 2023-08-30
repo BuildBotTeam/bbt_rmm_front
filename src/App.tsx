@@ -13,6 +13,7 @@ import {useSnackbar} from "notistack";
 import LoginPage from "./components/LoginPage";
 import HomePage from "./components/HomePage";
 import HomeIcon from '@mui/icons-material/Home';
+import MikRouterList from "./components/MikRouters/MikRouterList";
 
 const theme = createTheme({
     typography: {
@@ -66,7 +67,17 @@ export var defaultNavList: INavItem[] = [
         start_path: '',
         path: '/:id?',
         validate: '',
-        component: <div/>,
+        component: <MikRouterList/>,
+        children: [
+            {
+                name: 'Home',
+                icon: <div/>,
+                start_path: 'router',
+                path: '/create?/edit?',
+                validate: '',
+                component: <div/>,
+            },
+        ]
     },
 ]
 

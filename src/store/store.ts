@@ -1,10 +1,10 @@
 import {AnyAction, combineReducers, configureStore} from "@reduxjs/toolkit";
 import authReducer from './reducers/AuthReducer'
-import mRouterReducer from './reducers/MRouters'
+import mikRouterReducer from './reducers/MikRouters'
 
 const rootReducer = combineReducers({
     authReducer,
-    mRouterReducer,
+    mikRouterReducer,
 })
 
 const reducerProxy = (state: any, action: AnyAction) => {

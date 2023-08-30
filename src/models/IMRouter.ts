@@ -1,6 +1,6 @@
-export type MRouterType = {
+export type MikRouterType = {
     id: string
-    ip: string
+    host: string
     name: string
     username: string
     password: string

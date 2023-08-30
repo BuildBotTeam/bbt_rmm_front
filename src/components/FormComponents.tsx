@@ -39,7 +39,7 @@ export function FormTextField(props: FormTextFieldProps) {
                 <TextField {...rest} fullWidth value={value} onClick={onClick}
                            helperText={invalid && 'Необходимо заполнить'} error={invalid}
                            label={label} onChange={e => onClick || onChange(handleChange(e, value))}
-                           sx={{flexGrow: 1, bgcolor: 'white'}} size={'small'}/>
+                           sx={{flexGrow: 1}} size={'small'}/>
             )}
         />
     )
