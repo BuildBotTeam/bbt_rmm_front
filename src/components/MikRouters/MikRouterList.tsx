@@ -18,15 +18,21 @@ type MikRouterItemProps = {
 export function MikRouterItem({mikRouter}: MikRouterItemProps) {
 
     return (
-        <ListItem
-            secondaryAction={
-                <IconButton edge="end"><DeleteIcon/></IconButton>
-            }
-        >
-            <ListItemButton>
-                <Typography sx={{flex: 1}}>{mikRouter.host}</Typography>
-            </ListItemButton>
-        </ListItem>
+        <Paper sx={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
+            <ListItem
+                sx={{p: 0, pr: '110px'}}
+                secondaryAction={
+                    <Stack spacing={1} direction={'row'}>
+                        <IconButton edge="end"><EditIcon/></IconButton>
+                        <IconButton edge="end"><DeleteIcon/></IconButton>
+                    </Stack>
+                }
+            >
+                <ListItemButton>
+                    <Typography sx={{flex: 1}}>{mikRouter.host}</Typography>
+                </ListItemButton>
+            </ListItem>
+        </Paper>
     )
 }
 
@@ -37,7 +43,7 @@ export default function MikRouterList() {
     const {mikRouters} = useAppSelector(state => state.mikRouterReducer)
 
     useEffect(() => {
-        dispatch(getMikRouters())
+        // dispatch(getMikRouters())
     }, [])
 
     const body = useMemo(() => {
@@ -57,8 +63,8 @@ export default function MikRouterList() {
         return (
             <Paper sx={{width: 900}}>
                 <Stack spacing={1} sx={{p: 1}}>
-                    {mikRouters.map(v => <MikRouterItem key={`mik_route_${v.host}`} mikRouter={v}/>)}
                     <Button onClick={() => navigate('router/create')} startIcon={<AddIcon/>}>Добавить</Button>
+                    {mikRouters.map(v => <MikRouterItem key={`mik_route_${v.host}`} mikRouter={v}/>)}
                 </Stack>
             </Paper>
         )
