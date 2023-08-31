@@ -4,12 +4,11 @@ export type MikRouterType = {
     username: string
     password: string
     user_id: string
+    logs: MikRouterLogType[]
 }
 
 export type MikRouterLogType = {
-    id: string
     time: string
     topics: string
     message: string
-    router_id: string
 }

@@ -27,18 +27,6 @@ export const getMikRouter = createAsyncThunk(
     }
 )
 
-export const getMikRouterLogs = createAsyncThunk(
-    'getMikRouterLogs',
-    async (id: string, thunkAPI) => {
-        try {
-            const {data} = await api.get<MikRouterLogType[]>(`/mikrotik_routers/${id}/logs/`)
-            return data
-        } catch (e) {
-            return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
-        }
-    }
-)
-
 export const createMikRouters = createAsyncThunk(
     'createMikRouters',
     async (post: any, thunkAPI) => {

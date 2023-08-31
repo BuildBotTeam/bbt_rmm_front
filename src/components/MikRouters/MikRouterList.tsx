@@ -32,7 +32,7 @@ export function MikRouterItem({mikRouter}: MikRouterItemProps) {
                 }
             >
                 <ListItemButton onClick={() => navigate(`/${id}/detail`)}>
-                    <Typography sx={{flex: 1}}>{mikRouter.host} {mikRouter.user_id}</Typography>
+                    <Typography sx={{flex: 1}}>{mikRouter.host}</Typography>
                 </ListItemButton>
             </ListItem>
         </Paper>
