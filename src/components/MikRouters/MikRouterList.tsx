@@ -51,15 +51,12 @@ export default function MikRouterList() {
 
     if (mikRouters.length === 0) {
         return (
-            <Paper
-                sx={{
-                    maxWidth: '95%',
-                    width: 900,
-                    height: 500,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
+            <Paper sx={{
+                height: 500,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
                 <Stack spacing={1}>
                     <Typography sx={{color: 'gray'}}>Пока что не добавлен не один роутер</Typography>
                     <Box textAlign={'center'}>
@@ -70,8 +67,8 @@ export default function MikRouterList() {
         )
     }
     return (
-        <Paper sx={{width: 900, maxWidth: '95%'}}>
-            <Stack spacing={1} sx={{p: 1}}>
+        <Paper>
+            <Stack spacing={1} sx={{p: 1, width: '100%'}}>
                 <Button onClick={() => navigate('router/create')} startIcon={<AddIcon/>}>Добавить</Button>
                 {mikRouters.map(v => <MikRouterItem key={`mik_route_${v.host}`} mikRouter={v}/>)}
             </Stack>

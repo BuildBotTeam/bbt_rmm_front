@@ -1,17 +1,26 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createMikRouters, deleteMikRouters, getMikRouter, getMikRouters, updateMikRouters} from "../actions/mikRouters";
-import {MikRouterType} from "../../models/IMRouter";
+import {
+    createMikRouters,
+    deleteMikRouters,
+    getMikRouter,
+    getMikRouterLogs,
+    getMikRouters,
+    updateMikRouters
+} from "../actions/mikRouters";
+import {MikRouterLogType, MikRouterType} from "../../models/IMRouter";
 import {deleteElementFromList, updateElementInList} from "../../utils";
 
 
 interface IAuthState {
     mikRouters: MikRouterType[]
     mikRouter: MikRouterType | null
+    logs: MikRouterLogType[]
 }
 
 const initialState: IAuthState = {
     mikRouters: [],
-    mikRouter: null
+    mikRouter: null,
+    logs: []
 }
 
 export const mRouterSlice = createSlice({
@@ -28,6 +37,9 @@ export const mRouterSlice = createSlice({
         })
         builder.addCase(getMikRouter.fulfilled, (state, {payload}) => {
             state.mikRouter = payload
+        })
+        builder.addCase(getMikRouterLogs.fulfilled, (state, {payload}) => {
+            state.logs = payload
         })
         builder.addCase(createMikRouters.fulfilled, (state, {payload}) => {
             state.mikRouters = [payload, ...state.mikRouters]

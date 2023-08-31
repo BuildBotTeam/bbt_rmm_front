@@ -5,3 +5,11 @@ export type MikRouterType = {
     password: string
     user_id: string
 }
+
+export type MikRouterLogType = {
+    id: string
+    time: string
+    topics: string
+    message: string
+    router_id: string
+}

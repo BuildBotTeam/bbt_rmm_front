@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react'
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {
-    Box, Button, CircularProgress, Paper, Stack,
+    Box, Button, CircularProgress, Link, Paper, Stack, Typography,
 } from "@mui/material";
 import {useAppSelector} from "../hooks";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -13,7 +13,7 @@ export default function HomePage() {
 
 
     const header = useMemo(() => (
-        <Paper className={'header_paper'}>
+        <Paper className={'header_paper'} component={'header'}>
             <Stack direction={'row'}>
                 <Button onClick={() => navigate('/logout')} size={'large'}
                         endIcon={<LogoutIcon/>}><span>Logout</span></Button>
@@ -22,12 +22,21 @@ export default function HomePage() {
         </Paper>
     ), [isLoading, location, isAuth])
 
+    const footer = useMemo(() => (
+        <Paper className={'footer_paper'} component={'footer'}>
+            <Stack spacing={1} direction={'row'}>
+                <Typography>created by </Typography>
+                <Link href={'https://buildbotteam.ru'} underline={'hover'}>Build bot team</Link>
+                <Typography>© 2023</Typography>
+            </Stack>
+        </Paper>
+    ), [])
+
     return (
-        <Box>
+        <Box className={'home_paper'}>
             {header}
-            <Box sx={{mt: 8, display: 'flex', justifyContent: 'center'}}>
-                <Outlet/>
-            </Box>
+            <Outlet/>
+            {footer}
         </Box>
     )
 }
