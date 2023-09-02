@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {MikRouterType} from "../../models/IMRouter";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Grid from "@mui/material/Unstable_Grid2";
 
 
 type MikRouterItemProps = {
@@ -32,7 +33,14 @@ export function MikRouterItem({mikRouter}: MikRouterItemProps) {
                 }
             >
                 <ListItemButton onClick={() => navigate(`/${id}/detail`)}>
-                    <Typography sx={{flex: 1}}>{mikRouter.host}</Typography>
+                    <Grid container sx={{width: '100%'}}>
+                        <Grid xs={6} md={4}>
+                            <Typography>{mikRouter.host}</Typography>
+                        </Grid>
+                        <Grid xs={6} md={4} hidden={!mikRouter.host}>
+                            <Typography>{mikRouter.host}</Typography>
+                        </Grid>
+                    </Grid>
                 </ListItemButton>
             </ListItem>
         </Paper>

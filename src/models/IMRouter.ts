@@ -1,5 +1,6 @@
 export type MikRouterType = {
     id: string
+    name: string
     host: string
     username: string
     password: string

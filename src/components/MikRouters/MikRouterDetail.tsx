@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {Box, Button, Paper, Stack, Typography} from "@mui/material";
+import {Box, Button, Divider, Paper, Stack, Typography} from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import {getMikRouter} from "../../store/actions/mikRouters";
 import {setMikRouter} from "../../store/reducers/MikRouters";
@@ -38,7 +38,7 @@ export default function MikRouterDetail() {
                 <Button onClick={handleBack} startIcon={<ArrowBackIosNewIcon/>}
                         size={'small'}>назад</Button>
             </Box>
-            <Box sx={{maxHeight: '90%', overflow: 'auto'}}>
+            <Box sx={{height: 600, overflow: 'auto'}}>
                 <Stack spacing={1}>
                     {mikRouter.logs.map(log => <Paper sx={{p: 1}}>
                         <Grid container>
@@ -48,6 +48,7 @@ export default function MikRouterDetail() {
                             <Grid xs={6} md={3}>
                                 <Typography>{log.topics}</Typography>
                             </Grid>
+                            <Grid xs={12} md={0}><Divider sx={{m: 1}}/></Grid>
                             <Grid xs={12} md>
                                 <Typography sx={{flex: 1}}>{log.message}</Typography>
                             </Grid>
