@@ -20,7 +20,10 @@ export function MikRouterItem({mikRouter}: MikRouterItemProps) {
     const id = mikRouter.id
 
     return (
-        <Paper sx={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
+        <Paper sx={{
+            backgroundColor: mikRouter.is_online ? 'rgba(0,255,0,0.1)' : 'rgba(255,0,0,0.1)',
+            transition: '500ms'
+        }}>
             <ListItem
                 sx={{p: 0, pr: '110px'}}
                 secondaryAction={
@@ -32,13 +35,24 @@ export function MikRouterItem({mikRouter}: MikRouterItemProps) {
                     </Stack>
                 }
             >
-                <ListItemButton onClick={() => navigate(`/${id}/detail`)}>
-                    <Grid container sx={{width: '100%'}}>
-                        <Grid xs={6} md={4}>
-                            <Typography>{mikRouter.host}</Typography>
+                <ListItemButton sx={{pr: 0}}
+                                onClick={() => navigate(`/${id}/detail`)}>
+                    <Grid container disableEqualOverflow sx={{width: '100%'}}>
+                        <Grid xs={12} md={4}>
+                            <Stack direction={'row'} spacing={1} alignItems={'center'}>
+                                <Box sx={{
+                                    width: 15, height: 15, borderRadius: '50%',
+                                    backgroundColor: mikRouter.is_online ? 'green' : 'red',
+                                    transition: '1000ms'
+                                }}/>
+                                <Typography>{mikRouter.host}</Typography>
+                            </Stack>
                         </Grid>
-                        <Grid xs={6} md={4} hidden={!mikRouter.host}>
-                            <Typography>{mikRouter.host}</Typography>
+                        <Grid xs={12} md={4} hidden={!mikRouter.name}>
+                            <Typography>{mikRouter.name}</Typography>
+                        </Grid>
+                        <Grid xs={12} md={4}>
+                            <Typography>{mikRouter.version_os}</Typography>
                         </Grid>
                     </Grid>
                 </ListItemButton>

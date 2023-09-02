@@ -42,6 +42,7 @@ export default function MikRouterForm({handleClose}: MikRouterFormProps) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={1} sx={{mt: 1}}>
+                <FormTextField fieldName={'name'} label={'Name'} control={control}/>
                 <FormTextField fieldName={'host'} label={'Host or ip'} control={control} required/>
                 <FormTextField fieldName={'username'} label={'Username'} control={control} required/>
                 <Controller

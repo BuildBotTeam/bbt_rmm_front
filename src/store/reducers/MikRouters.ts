@@ -26,6 +26,9 @@ export const mRouterSlice = createSlice({
     reducers: {
         setMikRouter: (state, {payload}) => {
             state.mikRouter = payload
+        },
+        receiveMikRouter: (state, {payload}) => {
+            state.mikRouters = updateElementInList(state.mikRouters, payload)
         }
     },
     extraReducers: (builder) => {
@@ -47,5 +50,5 @@ export const mRouterSlice = createSlice({
     }
 })
 
-export const {setMikRouter} = mRouterSlice.actions
+export const {setMikRouter, receiveMikRouter} = mRouterSlice.actions
 export default mRouterSlice.reducer

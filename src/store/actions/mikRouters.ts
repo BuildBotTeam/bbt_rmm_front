@@ -1,13 +1,14 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import api, {apiError} from "../../api";
-import {MikRouterLogType, MikRouterType} from "../../models/IMRouter";
+import {MikRouterType} from "../../models/IMRouter";
 
 export const getMikRouters = createAsyncThunk(
     'getMikRouters',
     async (_, thunkAPI) => {
         try {
             const {data} = await api.get<MikRouterType[]>('/mikrotik_routers/')
+            data.reverse()
             return data
         } catch (e) {
             return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
@@ -20,6 +21,7 @@ export const getMikRouter = createAsyncThunk(
     async (id: string, thunkAPI) => {
         try {
             const {data} = await api.get<MikRouterType>(`/mikrotik_routers/${id}/`)
+            data.status_log.reverse()
             return data
         } catch (e) {
             return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
