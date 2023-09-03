@@ -108,7 +108,7 @@ export function FormSelect(props: FormSelectProps) {
         rules={{required: required}}
         defaultValue={multiple ? [] : defaultValue}
         render={({field: {onChange, value}, fieldState: {invalid}}) => (
-            <TextField {...rest} select label={label} sx={{minWidth: 100, bgcolor: 'white'}}
+            <TextField {...rest} select label={label} sx={{minWidth: 100}}
                        helperText={invalid && 'Необходимо заполнить'}
                        onChange={onChange} value={value} error={invalid} fullWidth size={'small'}>
                 {!required && <MenuItem value={''}>Все</MenuItem>}

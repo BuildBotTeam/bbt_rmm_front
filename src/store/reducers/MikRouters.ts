@@ -13,11 +13,13 @@ import {deleteElementFromList, updateElementInList} from "../../utils";
 interface IAuthState {
     mikRouters: MikRouterType[]
     mikRouter: MikRouterType | null
+    selectMikRouters: MikRouterType[]
 }
 
 const initialState: IAuthState = {
     mikRouters: [],
     mikRouter: null,
+    selectMikRouters: []
 }
 
 export const mRouterSlice = createSlice({
@@ -29,6 +31,18 @@ export const mRouterSlice = createSlice({
         },
         receiveMikRouter: (state, {payload}) => {
             state.mikRouters = updateElementInList(state.mikRouters, payload)
+        },
+        clearSelectMikRouters: (state) => {
+            state.selectMikRouters = []
+        },
+        setSelectMikRouters: (state, {payload}) => {
+            if (state.selectMikRouters.some(v => v.id === payload.id)) {
+                state.selectMikRouters = deleteElementFromList(state.selectMikRouters, payload.id)
+
+            } else {
+                state.selectMikRouters = [...state.selectMikRouters, payload]
+
+            }
         }
     },
     extraReducers: (builder) => {
@@ -50,5 +64,5 @@ export const mRouterSlice = createSlice({
     }
 })
 
-export const {setMikRouter, receiveMikRouter} = mRouterSlice.actions
+export const {setMikRouter, receiveMikRouter, setSelectMikRouters, clearSelectMikRouters} = mRouterSlice.actions
 export default mRouterSlice.reducer

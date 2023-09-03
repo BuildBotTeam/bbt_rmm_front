@@ -64,3 +64,16 @@ export const deleteMikRouters = createAsyncThunk(
         }
     }
 )
+
+export const sendScriptMikRouters = createAsyncThunk(
+    'sendScriptMikRouters',
+    async (post: any, thunkAPI) => {
+        try {
+            const {data} = await api.post('/mikrotik_routers/command/send_script/', post)
+            console.log(data)
+            return data
+        } catch (e) {
+            return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
+        }
+    }
+)

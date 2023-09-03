@@ -1,13 +1,25 @@
 import React, {useEffect} from 'react'
 import {deleteMikRouters, getMikRouters} from "../../store/actions/mikRouters";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {Box, Button, IconButton, ListItem, ListItemButton, Paper, Stack, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Checkbox,
+    IconButton,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    Paper,
+    Stack,
+    Typography, useMediaQuery
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import {MikRouterType} from "../../models/IMRouter";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Grid from "@mui/material/Unstable_Grid2";
+import {setSelectMikRouters} from "../../store/reducers/MikRouters";
 
 
 type MikRouterItemProps = {
@@ -17,7 +29,9 @@ type MikRouterItemProps = {
 export function MikRouterItem({mikRouter}: MikRouterItemProps) {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const matches = useMediaQuery((theme: any) => theme.breakpoints.down('md'))
     const id = mikRouter.id
+    const {selectMikRouters} = useAppSelector(state => state.mikRouterReducer)
 
     return (
         <Paper sx={{
@@ -25,8 +39,9 @@ export function MikRouterItem({mikRouter}: MikRouterItemProps) {
             transition: '500ms'
         }}>
             <ListItem
-                sx={{p: 0, pr: '110px'}}
+                sx={{p: 0, pr: {xs: 0, md: '110px'}}}
                 secondaryAction={
+                    !matches &&
                     <Stack spacing={1} direction={'row'}>
                         <IconButton edge="end"
                                     onClick={() => navigate(`/${id}/router/edit`)}><EditIcon/></IconButton>
@@ -35,6 +50,12 @@ export function MikRouterItem({mikRouter}: MikRouterItemProps) {
                     </Stack>
                 }
             >
+                <ListItemIcon sx={{minWidth: 'auto'}}>
+                    <Checkbox
+                        checked={selectMikRouters.some(v => v.id === id)}
+                        onChange={() => dispatch(setSelectMikRouters(mikRouter))}
+                    />
+                </ListItemIcon>
                 <ListItemButton sx={{pr: 0}}
                                 onClick={() => navigate(`/${id}/detail`)}>
                     <Grid container disableEqualOverflow sx={{width: '100%'}}>

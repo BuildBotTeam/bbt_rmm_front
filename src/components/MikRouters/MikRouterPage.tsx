@@ -7,6 +7,7 @@ import useWebSocket from "react-use-websocket";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {receiveMikRouter} from "../../store/reducers/MikRouters";
 import {enqueueSnackbar} from "notistack";
+import MikRouterCommandForm from "./MikRouterCommandForm";
 
 
 export default function MikRouterPage() {
@@ -39,6 +40,7 @@ export default function MikRouterPage() {
             }}>
                 <Outlet/>
             </Box>
+            <MikRouterCommandForm />
             <MainDialog open_key={'router'}><MikRouterForm/></MainDialog>
         </React.Fragment>
     )
