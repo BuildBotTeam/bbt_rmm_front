@@ -23,3 +23,8 @@ export type MikRouterStatusLogType = {
     bytes_out: string
     online: boolean
 }
+
+export type ScriptResult = {
+    is_success: boolean,
+    result: string
+}

@@ -70,7 +70,7 @@ export default function MikRouterDetail() {
                 return <FixedSizeList
                     height={450}
                     width={'100%'}
-                    itemSize={46}
+                    itemSize={50}
                     itemCount={mikRouter.status_log.length}
                     overscanCount={15}
                     itemData={mikRouter.status_log}

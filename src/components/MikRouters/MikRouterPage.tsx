@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import MikRouterForm from "./MikRouterForm";
 import {MainDialog} from "../OtherComponents";
 import {Outlet} from "react-router-dom";
@@ -15,12 +15,24 @@ export default function MikRouterPage() {
     const {token} = useAppSelector(state => state.authReducer)
     const server = localStorage.getItem('server')
     const url = server!.replace('http', 'ws') + '/backend/ws'
+    const didUnmount = useRef(false);
     const {sendMessage, lastJsonMessage, readyState} = useWebSocket(url, {
         queryParams: {"token": token!},
         onOpen: (event) => {
             sendMessage('connect')
-        }
+        },
+        shouldReconnect: (closeEvent) => {
+            return !didUnmount.current;
+        },
+        reconnectAttempts: 10,
+        reconnectInterval: 3000,
     });
+
+    useEffect(() => {
+        return () => {
+            didUnmount.current = true;
+        }
+    }, [])
 
     useEffect(() => {
         if (lastJsonMessage?.type === 'update_router') {
@@ -40,7 +52,7 @@ export default function MikRouterPage() {
             }}>
                 <Outlet/>
             </Box>
-            <MikRouterCommandForm />
+            <MikRouterCommandForm/>
             <MainDialog open_key={'router'}><MikRouterForm/></MainDialog>
         </React.Fragment>
     )

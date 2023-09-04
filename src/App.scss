@@ -151,3 +151,23 @@
   justify-content: center;
   border-radius: 4px 4px 0 0 !important;
 }
+
+@keyframes script-paper-anim {
+  from {
+    transform: translateY(-50%);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    transform: translateY(0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+}
+
+.script-result-animate {
+  animation: script-paper-anim ease-in-out 500ms;
+  padding: 16px;
+  word-wrap: anywhere;
+  white-space: break-spaces;
+  z-index: 0;
+}

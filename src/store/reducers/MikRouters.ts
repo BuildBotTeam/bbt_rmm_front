@@ -3,10 +3,10 @@ import {
     createMikRouters,
     deleteMikRouters,
     getMikRouter,
-    getMikRouters,
+    getMikRouters, sendCommandMikRouters,
     updateMikRouters
 } from "../actions/mikRouters";
-import {MikRouterType} from "../../models/IMRouter";
+import {MikRouterType, ScriptResult} from "../../models/IMRouter";
 import {deleteElementFromList, updateElementInList} from "../../utils";
 
 
@@ -14,12 +14,14 @@ interface IAuthState {
     mikRouters: MikRouterType[]
     mikRouter: MikRouterType | null
     selectMikRouters: MikRouterType[]
+    scriptResult: ScriptResult | null
 }
 
 const initialState: IAuthState = {
     mikRouters: [],
     mikRouter: null,
-    selectMikRouters: []
+    selectMikRouters: [],
+    scriptResult: null
 }
 
 export const mRouterSlice = createSlice({
@@ -34,6 +36,7 @@ export const mRouterSlice = createSlice({
         },
         clearSelectMikRouters: (state) => {
             state.selectMikRouters = []
+            state.scriptResult = null
         },
         setSelectMikRouters: (state, {payload}) => {
             if (state.selectMikRouters.some(v => v.id === payload.id)) {
@@ -60,6 +63,9 @@ export const mRouterSlice = createSlice({
         })
         builder.addCase(deleteMikRouters.fulfilled, (state, {payload}) => {
             state.mikRouters = deleteElementFromList(state.mikRouters, payload)
+        })
+        builder.addCase(sendCommandMikRouters.fulfilled, (state, {payload}) => {
+            state.scriptResult = payload
         })
     }
 })
