@@ -1,11 +1,24 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {Box, Button, DialogContent, DialogTitle, Divider, Paper, Stack, Typography, useMediaQuery} from "@mui/material";
+import {
+    Box,
+    Button,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    Paper,
+    Stack,
+    Typography,
+    useMediaQuery,
+    Link
+} from "@mui/material";
 import {FormSelect, FormTextField} from "../FormComponents";
 import {useForm} from "react-hook-form";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import {clearSelectMikRouters} from "../../store/reducers/MikRouters";
-import {getMikRouter, sendCommandMikRouters} from "../../store/actions/mikRouters";
+import {clearSelectMikRouters, setCommandResult} from "../../store/reducers/MikRouters";
+import {sendCommandMikRouters} from "../../store/actions/mikRouters";
+import {setLoading} from "../../store/reducers/AuthReducer";
+import {Link as RLink} from "react-router-dom";
 
 const actionsForm = [
     {id: 'ping', name: 'ping'},
@@ -55,15 +68,17 @@ export default function MikRouterCommandForm() {
             case 'remove_script':
                 return <FormTextField key={'script_name'} fieldName={'script_name'} label={'script_name'}
                                       control={control} required/>
-             case 'raw_command':
-                 return <FormTextField key={'raw_command'} fieldName={'raw_command'} label={'raw_command'}
+            case 'raw_command':
+                return <FormTextField key={'raw_command'} fieldName={'raw_command'} label={'raw_command'}
                                       control={control} required/>
         }
     }, [activeAction]);
 
     function onSubmit(values: any) {
+        dispatch(setCommandResult(null))
         values.ids = selectMikRouters.map(m => m.id)
-        dispatch(sendCommandMikRouters(values))
+        dispatch(sendCommandMikRouters(values)).then(() => dispatch(setLoading(true)))
+
     }
 
     return (
@@ -121,14 +136,14 @@ export default function MikRouterCommandForm() {
                     <Typography
                         color={scriptResult.is_success ? 'success.main' : 'error.main'}>{scriptResult.is_success ? 'Success' : 'Error'}</Typography>
                     <Divider variant={'middle'}/>
-                    <Typography>Detail:</Typography>
+                    <Link to={'result_detail'} component={RLink} underline={'hover'}>Detail:</Link>
                     <Typography
                         sx={{
                             border: '1px solid grey',
                             p: 1,
                             borderRadius: 3,
                             overflowY: 'auto',
-                            maxHeight: 300
+                            maxHeight: '30vh'
                         }}>{scriptResult.result}</Typography>
                 </Stack>
             </Paper>}

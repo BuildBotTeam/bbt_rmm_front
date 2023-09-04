@@ -38,6 +38,12 @@ export const mRouterSlice = createSlice({
             state.selectMikRouters = []
             state.scriptResult = null
         },
+        setCommandResult: (state, {payload}) => {
+            if (payload) {
+                if (state.scriptResult) state.scriptResult.result += payload.result
+                else state.scriptResult = payload
+            } else state.scriptResult = null
+        },
         setSelectMikRouters: (state, {payload}) => {
             if (state.selectMikRouters.some(v => v.id === payload.id)) {
                 state.selectMikRouters = deleteElementFromList(state.selectMikRouters, payload.id)
@@ -64,11 +70,11 @@ export const mRouterSlice = createSlice({
         builder.addCase(deleteMikRouters.fulfilled, (state, {payload}) => {
             state.mikRouters = deleteElementFromList(state.mikRouters, payload)
         })
-        builder.addCase(sendCommandMikRouters.fulfilled, (state, {payload}) => {
-            state.scriptResult = payload
-        })
+        // builder.addCase(sendCommandMikRouters.fulfilled, (state, {payload}) => {
+        //     state.scriptResult = payload
+        // })
     }
 })
 
-export const {setMikRouter, receiveMikRouter, setSelectMikRouters, clearSelectMikRouters} = mRouterSlice.actions
+export const {setMikRouter, receiveMikRouter, setSelectMikRouters, clearSelectMikRouters, setCommandResult} = mRouterSlice.actions
 export default mRouterSlice.reducer

@@ -78,7 +78,7 @@ export var defaultNavList: INavItem[] = [
                 path: '',
                 validate: '',
                 component: <MikRouterList/>,
-            },            {
+            }, {
                 name: 'router',
                 icon: <div/>,
                 start_path: 'router',
@@ -92,6 +92,13 @@ export var defaultNavList: INavItem[] = [
                 path: '',
                 validate: '',
                 component: <MikRouterDetail/>,
+            }, {
+                name: 'result_detail',
+                icon: <div/>,
+                start_path: 'result_detail',
+                path: '',
+                validate: '',
+                component: <div/>,
             },
         ]
     },

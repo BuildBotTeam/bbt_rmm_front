@@ -70,14 +70,13 @@ export function MainDialog(props: MainDialogProps) {
 }
 
 type MainDrawerProps = {
-    title: string
     open_key: string
     children: React.ReactElement
-    width_md?: number
+    width_md?: number | string
 }
 
 export function MainDrawer(props: MainDrawerProps) {
-    const {title, open_key, children, width_md} = props
+    const {open_key, children, width_md} = props
     const navigate = useNavigate()
     let location = useLocation()
 
@@ -98,8 +97,8 @@ export function MainDrawer(props: MainDrawerProps) {
             }}
         >
             <DialogTitle sx={{pb: 1}}>
-                <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <Typography variant={'h6'}>{title}</Typography>
+                <Box sx={{width: '100%', display: 'flex', justifyContent: 'end', alignItems: 'center'}}>
+                    {/*<Typography variant={'h6'}>{title}</Typography>*/}
                     <Button onClick={handleClose} variant={'text'} sx={{fontWeight: 700}}
                             startIcon={<ArrowBackIosNewIcon sx={{fontSize: 20}}/>}>Назад</Button>
                 </Box>

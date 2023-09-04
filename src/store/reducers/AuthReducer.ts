@@ -30,7 +30,11 @@ const initialState: IAuthState = {
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        setLoading: (state, {payload}) => {
+            state.isLoading = payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, {payload}) => {
             state.username = payload.username
@@ -87,4 +91,5 @@ export const authSlice = createSlice({
     }
 })
 
+export const {setLoading} = authSlice.actions
 export default authSlice.reducer

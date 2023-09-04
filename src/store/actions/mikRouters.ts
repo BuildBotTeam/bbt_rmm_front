@@ -2,6 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import api, {apiError} from "../../api";
 import {MikRouterType, ScriptResult} from "../../models/IMRouter";
+import {setLoading} from "../reducers/AuthReducer";
 
 export const getMikRouters = createAsyncThunk(
     'getMikRouters',
@@ -69,8 +70,7 @@ export const sendCommandMikRouters = createAsyncThunk(
     'sendCommandMikRouters',
     async (post: any, thunkAPI) => {
         try {
-            const {data} = await api.post<ScriptResult>('/mikrotik_routers/command/send_command/', post)
-            return data
+            await api.post<ScriptResult>('/mikrotik_routers/command/send_command/', post)
         } catch (e) {
             return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
         }
