@@ -11,7 +11,7 @@ export const login = createAsyncThunk(
         try {
             const server = post.server
             delete post.server
-            const {data} = await axios.post<IAuthResponse>(server + '/backend/auth/login/', post)
+            const {data} = await axios.post<IAuthResponse>(server + '/auth/login/', post)
             localStorage.setItem('user', data.username)
             localStorage.setItem('token', data.token)
             localStorage.setItem('server', server!)
@@ -19,7 +19,7 @@ export const login = createAsyncThunk(
                 config.headers["Authorization"] = `Token ${data.token}`;
                 return config
             })
-            api.defaults.baseURL = server + '/backend/api'
+            api.defaults.baseURL = server + '/api'
             return {username: data.username, token: data.token, interceptor: interceptor}
         } catch (e) {
             return thunkAPI.rejectWithValue({code: 0, message: 'Неверный логин или пароль'})
@@ -53,12 +53,12 @@ export const checkToken = createAsyncThunk(
         const server = localStorage.getItem('server')
         if (token) {
             try {
-                await axios.post<IAuthResponse>(server + '/backend/auth/check_token/', {},{headers: {Authorization: `Token ${token}`}})
+                await axios.post<IAuthResponse>(server + '/auth/check_token/', {},{headers: {Authorization: `Token ${token}`}})
                 interceptor = api.interceptors.request.use((config: any) => {
                     config.headers["Authorization"] = `Token ${token}`;
                     return config
                 })
-                api.defaults.baseURL = server + '/backend/api'
+                api.defaults.baseURL = server + '/api'
                 return {username: username, token: token, interceptor: interceptor}
             } catch (e) {
                 thunkAPI.dispatch(logout());

@@ -8,6 +8,7 @@ import {setMikRouter} from "../../store/reducers/MikRouters";
 import Grid from "@mui/material/Unstable_Grid2";
 import {InfoTitle} from "../OtherComponents";
 import {FixedSizeList} from 'react-window';
+import dayjs from 'dayjs';
 
 
 export default function MikRouterDetail() {
@@ -53,7 +54,7 @@ export default function MikRouterDetail() {
                         <Paper sx={{p: 1}}>
                             <Grid container>
                                 <Grid xs={6} md={2}>
-                                    <Typography>{data[index].time}</Typography>
+                                    <Typography>{dayjs(data[index].datetime).format('DD-MM HH:mm:ss')}</Typography>
                                 </Grid>
                                 <Grid xs={6} md={3}>
                                     <Typography>{data[index].topics}</Typography>

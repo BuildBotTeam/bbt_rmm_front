@@ -16,7 +16,7 @@ export default function MikRouterPage() {
     const {token} = useAppSelector(state => state.authReducer)
     const {scriptResult} = useAppSelector(state => state.mikRouterReducer)
     const server = localStorage.getItem('server')
-    const url = server!.replace('http', 'ws') + '/backend/ws'
+    const url = server!.replace('http', 'ws') + '/ws'
     const didUnmount = useRef(false);
     const {sendMessage, lastJsonMessage, readyState} = useWebSocket(url, {
         queryParams: {"token": token!},
