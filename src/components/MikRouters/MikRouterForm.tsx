@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import {Controller, useForm} from "react-hook-form";
 import {Button, IconButton, InputAdornment, Stack, TextField} from "@mui/material";
-import {FormTextField} from "../FormComponents";
+import {FormAutocompleteSelect, FormTextField} from "../FormComponents";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {createMikRouters, getMikRouter, updateMikRouters} from "../../store/actions/mikRouters";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {useLocation, useParams} from "react-router-dom";
+
+const topics = [
+    {id: 'critical', name: 'critical'},
+    {id: 'error', name: 'error'},
+    {id: 'warning', name: 'warning'},
+    {id: 'info', name: 'info'},
+]
+
 
 type MikRouterFormProps = {
     handleClose?(): void
@@ -30,8 +38,7 @@ export default function MikRouterForm({handleClose}: MikRouterFormProps) {
     }, [mikRouter]);
 
     function onSubmit(values: any) {
-        console.log(values)
-        if (isEdit){
+        if (isEdit) {
             dispatch(updateMikRouters(values))
         } else {
             dispatch(createMikRouters(values))
@@ -68,6 +75,9 @@ export default function MikRouterForm({handleClose}: MikRouterFormProps) {
                                    }}/>
                     )}
                 />
+                <FormAutocompleteSelect fieldName={'topics'} label={'topics'} control={control} searchList={topics}
+                                        multiple freeSolo
+                                        defaultValue={topics.slice(0, 3).map((v:any)=> v.id)}/>
                 <Button type={'submit'}>Отправить</Button>
             </Stack>
         </form>

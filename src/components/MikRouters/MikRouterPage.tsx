@@ -18,7 +18,7 @@ export default function MikRouterPage() {
     const server = localStorage.getItem('server')
     const url = server!.replace('http', 'ws') + '/ws'
     const didUnmount = useRef(false);
-    const {sendMessage, lastJsonMessage, readyState} = useWebSocket(url, {
+    const {sendMessage, lastJsonMessage} = useWebSocket(url, {
         queryParams: {"token": token!},
         onOpen: (event) => {
             sendMessage('connect')

@@ -56,7 +56,7 @@ type FormAutocompleteSelectProps = {
     [rest: string]: any
 }
 
-export function FormAutocomplete(props: FormAutocompleteSelectProps) {
+export function FormAutocompleteSelect(props: FormAutocompleteSelectProps) {
     const {fieldName, label, control, searchList, required, multiple, defaultValue, ...rest} = props
 
     return (
@@ -74,11 +74,15 @@ export function FormAutocomplete(props: FormAutocompleteSelectProps) {
                         options={searchList}
                         disableClearable={rest.disableClearable}
                         getOptionLabel={(option) => option?.name || searchList.find(val => val.id === option)?.name || ''}
-                        value={typeof value === 'string' ? Number(value) : value}
-                        isOptionEqualToValue={(option, val) => option?.id === Number(val) || option?.id === val?.id}
-                        onChange={(_, val) => onChange(val?.id || val?.map((v: any) => v.id ?? v) || val)}
+                        value={value}
+                        isOptionEqualToValue={(option, val) => option?.id === val || option?.id === val?.id}
+                        onChange={(_, val) => {
+                            if (multiple && Array.isArray(val)) {
+                                onChange(val?.filter((v: any) => !value?.includes(v.id))?.map((v: any) => v.id ?? v))
+                            } else onChange(val?.id || val)
+                        }}
                         renderInput={(params) => (
-                            <TextField {...params} label={label} sx={{minWidth: 100, bgcolor: 'white'}}
+                            <TextField {...params} label={label} sx={{minWidth: 100}}
                                        helperText={invalid && 'Необходимо заполнить'}
                                        error={invalid} fullWidth size={'small'}/>
                         )}
@@ -95,12 +99,13 @@ type FormSelectProps = {
     searchList: any[]
     required?: boolean
     multiple?: boolean
+    defVal?: any[] | any
     [rest: string]: any
 }
 
 export function FormSelect(props: FormSelectProps) {
-    const {fieldName, label, control, searchList, required, multiple, ...rest} = props
-    const defaultValue = required ? searchList[0]?.id : ''
+    const {fieldName, label, control, searchList, required, multiple, defVal, ...rest} = props
+    const defaultValue = defVal ? defVal : required ? searchList[0]?.id : ''
 
     return <Controller
         name={fieldName}
