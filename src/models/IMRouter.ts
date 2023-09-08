@@ -19,8 +19,7 @@ export type MikRouterLogType = {
 
 export type MikRouterStatusLogType = {
     time: string
-    bytes_in: string
-    bytes_out: string
+    message: string
     online: boolean
 }
 

@@ -86,11 +86,8 @@ export default function MikRouterDetail() {
                                     <Typography>{data[index].online ? 'online' : 'offline'}</Typography>
                                 </Grid>
                                 <Grid xs={12} md={0}><Divider sx={{m: 1}}/></Grid>
-                                <Grid xs={6} md={4}>
-                                    <InfoTitle subtitle={'bytes_in'} title={data[index].bytes_in}/>
-                                </Grid>
-                                <Grid xs={6} md={4}>
-                                    <InfoTitle subtitle={'bytes_out'} title={data[index].bytes_out}/>
+                                <Grid xs={6} md>
+                                     <Typography>{data[index].message}</Typography>
                                 </Grid>
                             </Grid>
                         </Paper>

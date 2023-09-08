@@ -1,9 +1,15 @@
 import axios, {AxiosError} from 'axios'
 
+// const actualUrl = {
+//     hostname: window.location.hostname,
+//     port: window.location.port,
+//     protocol: window.location.protocol,
+// }
+
 const actualUrl = {
-    hostname: window.location.hostname,
-    port: window.location.port,
-    protocol: window.location.protocol,
+    hostname: '192.168.252.192',
+    port: '4000',
+    protocol: 'http:'
 }
 
 export function getHostname() {
@@ -11,8 +17,10 @@ export function getHostname() {
     return `${protocol}//${hostname}${port ? ':' + port : ''}`
 }
 
-export const apiUrl = `${getHostname()}/backend/api/`
-export const wsUrl = getHostname().replace('http', 'ws') + '/backend/ws'
+// export const apiUrl = `${getHostname()}/backend/api/`
+export const apiUrl = `${getHostname()}/api/`
+// export const wsUrl = getHostname().replace('http', 'ws') + '/backend/ws'
+export const wsUrl = getHostname().replace('http', 'ws') + '/ws'
 
 const api = axios.create({
     baseURL: apiUrl,

@@ -9,7 +9,7 @@ export const login = createAsyncThunk(
     'login',
     async (post: IAuth, thunkAPI) => {
         try {
-            const {data} = await axios.post<IAuthResponse>(getHostname() + '/backend/auth/login/', post)
+            const {data} = await axios.post<IAuthResponse>(getHostname() + '/auth/login/', post)
             localStorage.setItem('user', data.username)
             localStorage.setItem('token', data.token)
             interceptor = api.interceptors.request.use((config: any) => {
@@ -40,7 +40,7 @@ export const checkToken = createAsyncThunk(
         const username = localStorage.getItem('username');
         if (token) {
             try {
-                await axios.post<IAuthResponse>(getHostname() + '/backend/auth/check_token/', {},{headers: {Authorization: `Token ${token}`}})
+                await axios.post<IAuthResponse>(getHostname() + '/auth/check_token/', {},{headers: {Authorization: `Token ${token}`}})
                 interceptor = api.interceptors.request.use((config: any) => {
                     config.headers["Authorization"] = `Token ${token}`;
                     return config
