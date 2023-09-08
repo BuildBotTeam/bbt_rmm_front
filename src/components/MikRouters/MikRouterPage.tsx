@@ -9,16 +9,15 @@ import {receiveMikRouter, setCommandResult} from "../../store/reducers/MikRouter
 import {enqueueSnackbar} from "notistack";
 import MikRouterCommandForm from "./MikRouterCommandForm";
 import {setLoading} from "../../store/reducers/AuthReducer";
+import {wsUrl} from "../../api";
 
 
 export default function MikRouterPage() {
     const dispatch = useAppDispatch()
     const {token} = useAppSelector(state => state.authReducer)
     const {scriptResult} = useAppSelector(state => state.mikRouterReducer)
-    const server = localStorage.getItem('server')
-    const url = server!.replace('http', 'ws') + '/ws'
     const didUnmount = useRef(false);
-    const {sendMessage, lastJsonMessage} = useWebSocket(url, {
+    const {sendMessage, lastJsonMessage} = useWebSocket(wsUrl, {
         queryParams: {"token": token!},
         onOpen: (event) => {
             sendMessage('connect')

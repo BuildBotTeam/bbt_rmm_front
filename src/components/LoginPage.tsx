@@ -14,7 +14,6 @@ export default function LoginPage() {
     const {control, handleSubmit} = useForm()
     const {token, isLoading} = useAppSelector(state => state.authReducer)
     const [showPassword, setShowPassword] = useState(false)
-    const defServer = localStorage.getItem('server') || 'http://localhost'
 
     useEffect(() => {
         if (token) navigate('/home', {replace: true})
@@ -83,16 +82,6 @@ export default function LoginPage() {
                                                    </InputAdornment>
                                                )
                                            }}/>
-                            )}
-                        />
-                        <Controller
-                            name={'server'}
-                            control={control}
-                            defaultValue={defServer}
-                            rules={{required: true}}
-                            render={({field, fieldState: {invalid}}) => (
-                                <TextField {...field} label="Server url" helperText={invalid && 'Необходимо заполнить'}
-                                           error={invalid} fullWidth/>
                             )}
                         />
                         <Box>
