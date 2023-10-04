@@ -2,7 +2,6 @@ import axios, {AxiosError} from "axios";
 import {IAuth} from "../../models/IAuth";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import api, {apiError, getHostname} from "../../api";
-import {MikRouterType} from "../../models/IMRouter";
 
 let interceptor = 0;
 
@@ -10,7 +9,9 @@ export const login = createAsyncThunk(
     'login',
     async (post: IAuth, thunkAPI) => {
         try {
-            const {data} = await axios.post<{ username: string, qr_code_url: string }>(getHostname() + '/backend/auth/login/', post)
+            const {data} = await axios.post<{
+                username: string
+            }>(getHostname() + '/backend/auth/login/', post)
             localStorage.setItem('user', data.username)
             return data
         } catch (e) {
@@ -39,16 +40,10 @@ export const check_secret = createAsyncThunk(
 export const logout = createAsyncThunk(
     'logout',
     async (_, thunkAPI) => {
-        try {
-            await api.post(getHostname() + `/backend/auth/logout/`)
-            return {}
-        } catch (e) {
-            return thunkAPI.rejectWithValue(apiError(e as Error | AxiosError))
-        } finally {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            api.interceptors.request.eject(interceptor)
-        }
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        api.interceptors.request.eject(interceptor)
+        return {}
     }
 )
 

@@ -5,13 +5,12 @@ import {check_secret} from "../store/actions/auth";
 import {Box, Paper, Stack} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import {FormTextField} from "./FormComponents";
-import QRCode from "react-qr-code";
 
 
 export default function CheckSecretPage() {
     const dispatch = useAppDispatch()
     const {control, handleSubmit} = useForm()
-    const {username, qr_code_url, isLoading} = useAppSelector(state => state.authReducer)
+    const {username, isLoading} = useAppSelector(state => state.authReducer)
 
 
     function onSubmit(value: any) {
@@ -32,10 +31,7 @@ export default function CheckSecretPage() {
                 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={2} sx={{padding: 1}}>
-                        <Box sx={{display: 'flex', justifyItems: 'center'}}>
-                            <QRCode value={qr_code_url}/>
-                        </Box>
-                        <FormTextField fieldName={'secret'} label={'Secret key'} control={control} required/>
+                        <FormTextField fieldName={'secret'} label={'Secret key'} control={control} required autoFocus/>
                         <Box>
                             <Stack sx={{float: 'right'}} direction={'row'} spacing={2}>
                                 <LoadingButton loading={isLoading} sx={{float: 'right'}} size={'large'} type={'submit'}

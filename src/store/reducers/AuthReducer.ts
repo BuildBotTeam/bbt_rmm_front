@@ -1,6 +1,5 @@
 import {AnyAction, createSlice, isFulfilled, isPending, isRejected} from "@reduxjs/toolkit";
 import {check_secret, checkToken, login, logout} from "../actions/auth";
-import {IAccount} from "../../models/IAuth";
 import api, {IApiError} from "../../api";
 import {INavItem, defaultNavList} from "../../App";
 
@@ -15,7 +14,6 @@ interface IAuthState {
     isAuth: boolean
     authState: boolean
     check_secret: boolean
-    qr_code_url: string
 }
 
 const initialState: IAuthState = {
@@ -28,7 +26,6 @@ const initialState: IAuthState = {
     isAuth: false,
     authState: true,
     check_secret: false,
-    qr_code_url: ''
 }
 
 export const authSlice = createSlice({
@@ -42,7 +39,6 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, {payload}) => {
             state.username = payload.username
-            state.qr_code_url = payload.qr_code_url
             state.isLoading = false
             state.error = null
             state.authState = false

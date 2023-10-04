@@ -170,7 +170,7 @@ const App: React.FC = () => {
         }
         return (
             <Routes>
-                <Route path="login" element={<Navigate to={'/'}/>}/>
+                <Route path="check_secret" element={<Navigate to={'/'}/>}/>
                 <Route path="logout" element={<Navigate replace to={'login'}/>}/>
                 <Route path="/" element={<HomePage/>}>
                     {navigationList}
