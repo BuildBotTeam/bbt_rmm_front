@@ -12,7 +12,7 @@ export type MikRouterType = {
 }
 
 export type MikRouterLogType = {
-    datetime: string
+    time: string
     topics: string
     message: string
 }

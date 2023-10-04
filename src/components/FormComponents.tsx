@@ -4,14 +4,13 @@ import {Autocomplete, MenuItem, TextField} from "@mui/material";
 import React from "react";
 // import 'dayjs/locale/ru'
 
-
 type FormTextFieldProps = {
     fieldName: any
     label: string
     number?: boolean
     required?: boolean
     control: Control<any>
-    defaultValue?: string
+    defaultValue?: string | number
     onClick?(): void
     [rest: string]: any
 }
@@ -34,7 +33,7 @@ export function FormTextField(props: FormTextFieldProps) {
             name={fieldName}
             control={control}
             rules={{required: required}}
-            defaultValue={number ? 1 : defaultValue || ''}
+            defaultValue={defaultValue ? defaultValue : number ? 1 : ''}
             render={({field: {onChange, value}, fieldState: {invalid}}) => (
                 <TextField {...rest} fullWidth value={value} onClick={onClick}
                            helperText={invalid && 'Необходимо заполнить'} error={invalid}

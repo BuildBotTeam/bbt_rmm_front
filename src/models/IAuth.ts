@@ -27,8 +27,3 @@ export interface IAccount {
     is_superuser: boolean
     role: IRole
 }
-
-export interface IAuthResponse {
-    token: string
-    username: string
-}

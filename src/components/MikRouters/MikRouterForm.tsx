@@ -50,7 +50,10 @@ export default function MikRouterForm({handleClose}: MikRouterFormProps) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={1} sx={{mt: 1}}>
                 <FormTextField fieldName={'name'} label={'Name'} control={control}/>
-                <FormTextField fieldName={'host'} label={'Host or ip'} control={control} required/>
+                <Stack direction={{md: 'row', xs: 'column'}} spacing={1}>
+                    <FormTextField fieldName={'host'} label={'Host or ip'} control={control} required/>
+                    <FormTextField fieldName={'ssh_port'} label={'SSH Port'} control={control} number required defaultValue={22}/>
+                </Stack>
                 <FormTextField fieldName={'username'} label={'Username'} control={control} required/>
                 <Controller
                     name={'password'}
@@ -75,9 +78,9 @@ export default function MikRouterForm({handleClose}: MikRouterFormProps) {
                                    }}/>
                     )}
                 />
-                <FormAutocompleteSelect fieldName={'topics'} label={'topics'} control={control} searchList={topics}
-                                        multiple freeSolo
-                                        defaultValue={topics.slice(0, 3).map((v:any)=> v.id)}/>
+                {/*<FormAutocompleteSelect fieldName={'topics'} label={'topics'} control={control} searchList={topics}*/}
+                {/*                        multiple freeSolo*/}
+                {/*                        defaultValue={topics.slice(0, 3).map((v: any) => v.id)}/>*/}
                 <Button type={'submit'}>Отправить</Button>
             </Stack>
         </form>

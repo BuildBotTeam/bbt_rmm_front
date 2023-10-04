@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Box, IconButton, InputAdornment, Paper, Stack, TextField, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {login} from "../store/actions/auth";
@@ -10,14 +10,10 @@ import {useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
     const {control, handleSubmit} = useForm()
-    const {token, isLoading} = useAppSelector(state => state.authReducer)
+    const {isLoading} = useAppSelector(state => state.authReducer)
     const [showPassword, setShowPassword] = useState(false)
 
-    useEffect(() => {
-        if (token) navigate('/home', {replace: true})
-    }, [token])
 
     function onSubmit(value: any) {
         dispatch(login(value))
@@ -40,17 +36,6 @@ export default function LoginPage() {
                         <Typography variant={'h3'} sx={{textAlign: 'center', fontWeight: 'bold'}}>
                             Mikrotik management
                         </Typography>
-                        <Controller
-                            name={'email'}
-                            control={control}
-                            defaultValue={''}
-                            rules={{required: true}}
-                            render={({field, fieldState: {invalid}}) => (
-                                <TextField {...field} label="Email" type={'email'}
-                                           helperText={invalid && 'Необходимо заполнить'}
-                                           error={invalid} fullWidth/>
-                            )}
-                        />
                         <Controller
                             name={'username'}
                             control={control}

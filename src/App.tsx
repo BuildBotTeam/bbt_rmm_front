@@ -16,6 +16,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import MikRouterList from "./components/MikRouters/MikRouterList";
 import MikRouterDetail from "./components/MikRouters/MikRouterDetail";
 import MikRouterPage from "./components/MikRouters/MikRouterPage";
+import CheckSecretPage from "./components/CheckSecretPage";
+
 
 const theme = createTheme({
     typography: {
@@ -108,7 +110,7 @@ const App: React.FC = () => {
     const location = useLocation()
     const dispatch = useAppDispatch()
     const {enqueueSnackbar} = useSnackbar()
-    const {authState, isAuth, navList, error} = useAppSelector(state => state.authReducer)
+    const {authState, isAuth, navList, error, check_secret} = useAppSelector(state => state.authReducer)
 
     useEffect(() => {
         if (error?.message && error?.code !== 401) {
@@ -148,6 +150,12 @@ const App: React.FC = () => {
                     <CircularProgress/>
                 </Box>
             )
+        }
+        if (check_secret) {
+            return <Routes>
+                <Route path={'*'} element={<Navigate replace to={'check_secret'}/>}/>
+                <Route path="check_secret" element={<CheckSecretPage/>}/>
+            </Routes>
         }
         if (!authState && !isAuth) {
             return (
