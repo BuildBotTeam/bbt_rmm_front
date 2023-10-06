@@ -10,29 +10,18 @@ export const login = createAsyncThunk(
     async (post: IAuth, thunkAPI) => {
         try {
             const {data} = await axios.post<{
-                username: string
+                username: string,
+                token: string
             }>(getHostname() + '/backend/auth/login/', post)
             localStorage.setItem('user', data.username)
-            return data
-        } catch (e) {
-            return thunkAPI.rejectWithValue({code: 0, message: 'Неверный логин или пароль'})
-        }
-    }
-)
-
-export const check_secret = createAsyncThunk(
-    'check_secret',
-    async (post: { username: string, secret: string }, thunkAPI) => {
-        try {
-            const {data} = await axios.post<{ token: string }>(getHostname() + '/backend/auth/check_secret/', post)
             localStorage.setItem('token', data.token)
             interceptor = api.interceptors.request.use((config: any) => {
                 config.headers["Authorization"] = `Token ${data.token}`;
                 return config
             })
-            return {token: data.token, interceptor: interceptor}
+            return {username: data.username, token: data.token, interceptor: interceptor}
         } catch (e) {
-            return thunkAPI.rejectWithValue({code: 0, message: 'Неверный ключ'})
+            return thunkAPI.rejectWithValue({code: 0, message: 'Неверный логин или пароль'})
         }
     }
 )

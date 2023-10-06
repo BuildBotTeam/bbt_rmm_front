@@ -16,7 +16,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import MikRouterList from "./components/MikRouters/MikRouterList";
 import MikRouterDetail from "./components/MikRouters/MikRouterDetail";
 import MikRouterPage from "./components/MikRouters/MikRouterPage";
-import CheckSecretPage from "./components/CheckSecretPage";
 
 
 const theme = createTheme({
@@ -110,7 +109,7 @@ const App: React.FC = () => {
     const location = useLocation()
     const dispatch = useAppDispatch()
     const {enqueueSnackbar} = useSnackbar()
-    const {authState, isAuth, navList, error, check_secret} = useAppSelector(state => state.authReducer)
+    const {authState, isAuth, navList, error} = useAppSelector(state => state.authReducer)
 
     useEffect(() => {
         if (error?.message && error?.code !== 401) {
@@ -151,12 +150,6 @@ const App: React.FC = () => {
                 </Box>
             )
         }
-        if (check_secret) {
-            return <Routes>
-                <Route path={'*'} element={<Navigate replace to={'check_secret'}/>}/>
-                <Route path="check_secret" element={<CheckSecretPage/>}/>
-            </Routes>
-        }
         if (!authState && !isAuth) {
             return (
                 <Routes>
@@ -170,7 +163,7 @@ const App: React.FC = () => {
         }
         return (
             <Routes>
-                <Route path="check_secret" element={<Navigate to={'/'}/>}/>
+                <Route path="login" element={<Navigate to={'/'}/>}/>
                 <Route path="logout" element={<Navigate replace to={'login'}/>}/>
                 <Route path="/" element={<HomePage/>}>
                     {navigationList}

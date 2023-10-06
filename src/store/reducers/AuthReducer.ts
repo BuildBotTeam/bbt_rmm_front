@@ -1,5 +1,5 @@
 import {AnyAction, createSlice, isFulfilled, isPending, isRejected} from "@reduxjs/toolkit";
-import {check_secret, checkToken, login, logout} from "../actions/auth";
+import {checkToken, login, logout} from "../actions/auth";
 import api, {IApiError} from "../../api";
 import {INavItem, defaultNavList} from "../../App";
 
@@ -13,7 +13,6 @@ interface IAuthState {
     interceptor: number
     isAuth: boolean
     authState: boolean
-    check_secret: boolean
 }
 
 const initialState: IAuthState = {
@@ -25,7 +24,6 @@ const initialState: IAuthState = {
     interceptor: 0,
     isAuth: false,
     authState: true,
-    check_secret: false,
 }
 
 export const authSlice = createSlice({
@@ -39,15 +37,6 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, {payload}) => {
             state.username = payload.username
-            state.isLoading = false
-            state.error = null
-            state.authState = false
-            state.check_secret = true
-        })
-        builder.addCase(check_secret.pending, (state) => {
-            state.authState = true
-        })
-        builder.addCase(check_secret.fulfilled, (state, {payload}) => {
             state.token = payload.token
             state.navList = defaultNavList
             state.interceptor = payload.interceptor
@@ -55,7 +44,6 @@ export const authSlice = createSlice({
             state.error = null
             state.isAuth = true
             state.authState = false
-            state.check_secret = false
         })
         builder.addCase(checkToken.pending, (state) => {
             state.authState = true

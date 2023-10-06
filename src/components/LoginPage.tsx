@@ -6,7 +6,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {LoadingButton} from "@mui/lab";
 import {useForm, Controller} from "react-hook-form";
-import {useNavigate} from "react-router-dom";
+import {FormTextField} from "./FormComponents";
+
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()
@@ -43,7 +44,7 @@ export default function LoginPage() {
                             rules={{required: true}}
                             render={({field, fieldState: {invalid}}) => (
                                 <TextField {...field} label="Login" helperText={invalid && 'Необходимо заполнить'}
-                                           error={invalid} fullWidth/>
+                                           error={invalid} fullWidth autoFocus/>
                             )}
                         />
                         <Controller
@@ -59,6 +60,7 @@ export default function LoginPage() {
                                                endAdornment: (
                                                    <InputAdornment position="end">
                                                        <IconButton
+                                                           tabIndex={-1}
                                                            aria-label="toggle password visibility"
                                                            onClick={() => setShowPassword(val => !val)}
                                                        >
@@ -69,6 +71,7 @@ export default function LoginPage() {
                                            }}/>
                             )}
                         />
+                        <FormTextField fieldName={'secret'} label={'Secret key'} control={control} required/>
                         <Box>
                             <Stack sx={{float: 'right'}} direction={'row'} spacing={2}>
                                 <LoadingButton loading={isLoading} sx={{float: 'right'}} size={'large'} type={'submit'}
